@@ -1,6 +1,7 @@
 
 import { Body, Controller, Post } from '@nestjs/common';
 import { TransferService } from './transfers.service.js';
+import { CreateTransferDto } from './dto/create-transfer.dto.js';
 
 @Controller('transfers')
 export class TransferController {
@@ -9,7 +10,7 @@ export class TransferController {
   ) {}
 
   @Post()
-  initiateTransfer(@Body('amount') amount: number) {
-    return this.transferService.initiateTransfer(amount);
+  initiateTransfer(@Body() dto: CreateTransferDto) {
+    return this.transferService.initiateTransfer(dto.amount);
   }
 }
