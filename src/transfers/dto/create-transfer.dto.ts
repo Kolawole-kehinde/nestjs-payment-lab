@@ -1,8 +1,9 @@
-import { IsNumber, IsPositive } from "class-validator";
+import { IsNumber, IsPositive, Max } from "class-validator";
 
 
 export class CreateTransferDto {
-    @IsNumber()
+    @IsNumber({allowInfinity: false, allowNaN: false})
     @IsPositive()
+    @Max(1000000)
     amount: number
 }
