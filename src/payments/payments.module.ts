@@ -16,4 +16,4 @@ import { PaymentsService } from "./payments.service.js";
     ]
 })
 
-export class ProviderModule {}
+export class PaymentModule {}

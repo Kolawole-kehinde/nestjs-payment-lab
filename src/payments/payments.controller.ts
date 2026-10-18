@@ -3,7 +3,7 @@ import { PaymentsService } from "./payments.service.js";
 
 
 
-@Controller('payment')
+@Controller('payments')
 export class PaymentsController {
      constructor(
         private readonly paymentService: PaymentsService
