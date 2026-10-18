@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PAYMENT_PROVIDER } from './payment-provider.token.js';
-import { PaymentProvider } from './payment-provider.interface.js';
+import type { PaymentProvider } from './payment-provider.interface.js';
 
 
 @Injectable()
