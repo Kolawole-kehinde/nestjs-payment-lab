@@ -1,6 +1,6 @@
-export interface PrividerInterface {
+export interface PaymentProvider  {
     createPayment (amount: number): Promise<{
-        refrence: string;
+        reference: string;
         status: string;
         amount: number
 
