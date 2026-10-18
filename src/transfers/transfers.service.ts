@@ -10,7 +10,7 @@ export class TransferService {
      ) {}
 
 
-     initialTransfer(amount: number) {
+     initiateTransfer(amount: number) {
        return this.paymentService.createPayment(amount)
      }
 }

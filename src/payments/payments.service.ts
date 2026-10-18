@@ -13,8 +13,5 @@ export class PaymentsService {
   async createPayment(amount: number) {
     return this.paymentProvider.createPayment(amount);
   }
-
-  export: [PaymentsService]
+  
 }
-
-export class PaymentService{}
