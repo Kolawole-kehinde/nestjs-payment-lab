@@ -7,6 +7,7 @@ import { AppService } from './app.service.js';
 import { PaymentModule } from './payments/payments.module.js';
 import { TransferModule } from './transfers/transfers.module.js';
 import { JwtModule } from '@nestjs/jwt';
+import { AuthModule } from './auth/auth.module.js';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { JwtModule } from '@nestjs/jwt';
       })
 
     }),
+    AuthModule,
     PaymentModule,
     TransferModule,
   ],
