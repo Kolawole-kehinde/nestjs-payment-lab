@@ -10,10 +10,10 @@ export class AuthController {
 
   @Post('dev-token')
   async createDevToken() {
-    const payload = {
-      sub: 'user-123',
-      role: 'customer',
-    };
+  const payload = {
+  sub: 'user-123',
+  role: 'admin',
+};
 
     return {
       access_token: await this.jwtService.signAsync(payload),
