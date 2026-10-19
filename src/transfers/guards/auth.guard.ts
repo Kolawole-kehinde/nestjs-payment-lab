@@ -5,23 +5,31 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
-
 export class AuthGuard implements CanActivate {
-  canActivate(context: ExecutionContext): boolean {
-    const request = context
-      .switchToHttp()
-      .getRequest();
+  constructor(
+    private readonly jwtService: JwtService,
+  ) {}
+  
 
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
     const authorization = request.headers.authorization;
 
-    if (!authorization) {
-      throw new UnauthorizedException(
-        'Authentication required',
-      );
+    if (!authorization || !authorization.startsWith('Bearer ')) {
+      throw new UnauthorizedException('Authentication required');
     }
 
-    return true;
+    const token = authorization.slice(7);
+
+    try {
+      const payload = await this.jwtService.verifyAsync(token);
+      request.user = payload;
+      return true;
+    } catch {
+      throw new UnauthorizedException('Invalid or expired token');
+    }
   }
 }
