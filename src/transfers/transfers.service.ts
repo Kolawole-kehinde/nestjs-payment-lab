@@ -1,21 +1,31 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
-import { PaymentsService } from "../payments/payments.service.js";
 
-
+import {
+  BadRequestException,
+  Injectable,
+} from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { PaymentsService } from '../payments/payments.service.js';
 
 @Injectable()
 export class TransferService {
-     constructor(
-        private readonly paymentService: PaymentsService,
-     ) {}
+  constructor(
+    private readonly paymentsService: PaymentsService,
+    private readonly configService: ConfigService,
+  ) {}
 
+  initiateTransfer(amount: number) {
+    const maxAmount = Number(
+        this.configService.get<string>(
+            'MAX_TRANSFER_AMOUNT'
+        )
+    )
 
-     initiateTransfer(amount: number) {
-        if(amount > 1000000){
-            throw new BadRequestException(
-                'Transfer amount cannot exceed 1,000,000'
-            )
-        }
-       return this.paymentService.createPayment(amount)
-     }
+    if (maxAmount === undefined || amount > maxAmount) {
+      throw new BadRequestException(
+        'Transfer amount exceeds the allowed limit',
+      );
+    }
+
+    return this.paymentsService.createPayment(amount);
+  }
 }
