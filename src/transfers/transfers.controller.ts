@@ -8,6 +8,7 @@ import { Roles } from '../auth/roles.decorator.js';
 import { Role } from '../auth/role.enum.js';
 import { CurrentUser } from '../auth/current-user.decorator.js';
 import type { AuthenticatedUser } from '../auth/authenticated-user.interface.js';
+import { CurrentRole } from '../auth/current-role.decorator.js';
 
 @Controller('transfers')
 @UseGuards(AuthGuard, RolesGuard)
@@ -31,6 +32,14 @@ export class TransferController {
 
   @Get('me')
   getCurrentUser(@CurrentUser() user: AuthenticatedUser){
-    return user
+    return {
+        id: user.sub,
+        role: user.role
+    }
+  };
+
+  @Get('my-role')
+  getCurrentRole(@CurrentRole() role:Role){
+    return {role}
   }
 }
