@@ -1,6 +1,7 @@
 
 import { Controller, Post } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Role } from './role.enum.js';
 
 @Controller('auth')
 export class AuthController {
@@ -12,7 +13,7 @@ export class AuthController {
   async createDevToken() {
   const payload = {
   sub: 'user-123',
-  role: 'admin',
+  role: Role.ADMIN,
 };
 
     return {
