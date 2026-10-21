@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Logger,
 } from '@nestjs/common';
+import { RequestWithId } from '../middleware/request-logging.middleware.js';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -14,7 +15,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
     const context = host.switchToHttp();
     const response = context.getResponse();
-    const request = context.getRequest();
+    const request = context.getRequest<RequestWithId>();
 
     const status =
       exception instanceof HttpException
@@ -39,11 +40,16 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
       this.logger.error(
-        `Unexpected error on ${request.method} ${request.url}`,
+        JSON.stringify({
+          requestId: request.requestId,
+          method: request.method,
+          path: request.url,
+          statusCode: status,
+          message: 'Unexpected server error',
+        }),
         exception instanceof Error ? exception.stack : undefined,
       );
     }
-
     response.status(status).json({
       statusCode: status,
       message,
