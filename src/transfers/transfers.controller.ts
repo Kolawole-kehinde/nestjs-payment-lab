@@ -41,5 +41,10 @@ export class TransferController {
   @Get('my-role')
   getCurrentRole(@CurrentRole() role:Role){
     return {role}
-  }
+  };
+
+//   @Get('test-server-error')
+// testServerError() {
+//   throw new Error('Database connection failed: internal details');
+// }
 }
