@@ -10,6 +10,7 @@ import { CurrentUser } from '../auth/current-user.decorator.js';
 import type { AuthenticatedUser } from '../auth/authenticated-user.interface.js';
 import { CurrentRole } from '../auth/current-role.decorator.js';
 import { ResponseTimeInterceptor } from '../common/interceptors/response-time.interceptor.js';
+import { TransformResponseInterceptor } from '../common/interceptors/transform-response.interceptor.js';
 
 
 @UseInterceptors(ResponseTimeInterceptor)
@@ -33,6 +34,7 @@ export class TransferController {
     };
   };
 
+  @UseInterceptors(TransformResponseInterceptor)
   @Get('me')
   getCurrentUser(@CurrentUser() user: AuthenticatedUser){
     return {
